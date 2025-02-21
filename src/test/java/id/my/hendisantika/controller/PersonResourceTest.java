@@ -1,8 +1,10 @@
 package id.my.hendisantika.controller;
 
+import id.my.hendisantika.entity.Person;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -31,4 +33,22 @@ public class PersonResourceTest {
     public void setUp() {
         RestAssured.baseURI = "http://localhost:8081";
     }
+
+    @Test
+    public void testCreatePerson() {
+        Person person = new Person();
+        person.name = "John Doe";
+        person.age = 30;
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(person)
+                .when()
+                .post("/persons")
+                .then()
+                .statusCode(201)
+                .body("name", is("John Doe"))
+                .body("age", is(30));
+    }
+
 }
