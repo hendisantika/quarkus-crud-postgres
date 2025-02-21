@@ -2,6 +2,8 @@ package id.my.hendisantika.controller;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeEach;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 /**
@@ -25,4 +27,8 @@ public class PersonResourceTest {
             .withUsername("yu71")
             .withPassword("53cret");
 
+    @BeforeEach
+    public void setUp() {
+        RestAssured.baseURI = "http://localhost:8081";
+    }
 }
