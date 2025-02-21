@@ -1,10 +1,14 @@
 package id.my.hendisantika.controller;
 
+import id.my.hendisantika.entity.Person;
 import id.my.hendisantika.repository.PersonRepository;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
+
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,4 +28,9 @@ public class PersonResource {
 
     @Inject
     private PersonRepository personRepository;
+
+    @GET
+    public List<Person> getAll() {
+        return personRepository.listAll();
+    }
 }
