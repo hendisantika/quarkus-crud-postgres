@@ -7,7 +7,9 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
@@ -48,5 +50,17 @@ public class PersonResource {
     public Response create(Person person) {
         personRepository.persist(person);
         return Response.status(Response.Status.CREATED).entity(person).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Person update(@PathParam("id") Long id, Person person) {
+        Person entity = personRepository.findById(id);
+        if (entity != null) {
+            entity.name = person.name;
+            entity.age = person.age;
+        }
+        return entity;
     }
 }
