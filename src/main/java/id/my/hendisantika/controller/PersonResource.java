@@ -5,6 +5,7 @@ import id.my.hendisantika.repository.PersonRepository;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -62,5 +63,12 @@ public class PersonResource {
             entity.age = person.age;
         }
         return entity;
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public void delete(@PathParam("id") Long id) {
+        personRepository.deleteById(id);
     }
 }
