@@ -2,6 +2,7 @@ package id.my.hendisantika.controller;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
+import org.testcontainers.containers.PostgreSQLContainer;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,5 +19,10 @@ import io.quarkus.test.junit.QuarkusTest;
 @Testcontainers
 @QuarkusTestResource(PostgresResource.class)
 public class PersonResourceTest {
+    @Container
+    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17.3-alpine3.20")
+            .withDatabaseName("person")
+            .withUsername("yu71")
+            .withPassword("53cret");
 
 }
