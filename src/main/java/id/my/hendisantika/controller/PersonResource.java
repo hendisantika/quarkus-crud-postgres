@@ -33,4 +33,10 @@ public class PersonResource {
     public List<Person> getAll() {
         return personRepository.listAll();
     }
+
+    @GET
+    @Path("/{id}")
+    public Person getById(@PathParam("id") Long id) {
+        return personRepository.findById(id);
+    }
 }
