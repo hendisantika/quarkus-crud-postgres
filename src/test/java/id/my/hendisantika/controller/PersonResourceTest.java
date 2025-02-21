@@ -51,4 +51,15 @@ public class PersonResourceTest {
                 .body("age", is(30));
     }
 
+    @Test
+    public void testGetPerson() {
+        given()
+                .when()
+                .get("/persons/1")
+                .then()
+                .statusCode(200)
+                .body("name", is("John Doe"))
+                .body("age", is(30));
+    }
+
 }
