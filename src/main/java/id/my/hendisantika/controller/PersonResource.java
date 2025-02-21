@@ -3,10 +3,13 @@ package id.my.hendisantika.controller;
 import id.my.hendisantika.entity.Person;
 import id.my.hendisantika.repository.PersonRepository;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -38,5 +41,12 @@ public class PersonResource {
     @Path("/{id}")
     public Person getById(@PathParam("id") Long id) {
         return personRepository.findById(id);
+    }
+
+    @POST
+    @Transactional
+    public Response create(Person person) {
+        personRepository.persist(person);
+        return Response.status(Response.Status.CREATED).entity(person).build();
     }
 }
