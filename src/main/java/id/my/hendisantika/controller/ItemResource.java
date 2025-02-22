@@ -1,12 +1,15 @@
 package id.my.hendisantika.controller;
 
 import id.my.hendisantika.entity.Item;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
@@ -34,5 +37,12 @@ public class ItemResource {
     @Path("/{id}")
     public Item getItem(@PathParam("id") Long id) {
         return Item.findById(id);
+    }
+
+    @POST
+    @Transactional
+    public Response addItem(Item item) {
+        item.persist();
+        return Response.status(Response.Status.CREATED).entity(item).build();
     }
 }
