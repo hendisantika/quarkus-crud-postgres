@@ -4,6 +4,7 @@ import id.my.hendisantika.entity.Item;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
@@ -27,5 +28,11 @@ public class ItemResource {
     @GET
     public List<Item> getAllItems() {
         return Item.listAll();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Item getItem(@PathParam("id") Long id) {
+        return Item.findById(id);
     }
 }
