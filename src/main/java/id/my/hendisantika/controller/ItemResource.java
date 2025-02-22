@@ -3,6 +3,7 @@ package id.my.hendisantika.controller;
 import id.my.hendisantika.entity.Item;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -58,5 +59,17 @@ public class ItemResource {
         item.name = updatedItem.name;
         item.description = updatedItem.description;
         return Response.ok(item).build();
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public Response deleteItem(@PathParam("id") Long id) {
+        Item item = Item.findById(id);
+        if (item == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        item.delete();
+        return Response.noContent().build();
     }
 }
