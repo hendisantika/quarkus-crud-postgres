@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
@@ -44,5 +45,18 @@ public class ItemResource {
     public Response addItem(Item item) {
         item.persist();
         return Response.status(Response.Status.CREATED).entity(item).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Response updateItem(@PathParam("id") Long id, Item updatedItem) {
+        Item item = Item.findById(id);
+        if (item == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        item.name = updatedItem.name;
+        item.description = updatedItem.description;
+        return Response.ok(item).build();
     }
 }
