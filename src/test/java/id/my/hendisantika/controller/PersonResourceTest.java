@@ -7,8 +7,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static io.restassured.RestAssured.given;
@@ -29,12 +27,6 @@ import static org.hamcrest.Matchers.is;
 @Testcontainers
 @QuarkusTestResource(PostgresResource.class)
 public class PersonResourceTest {
-    @Container
-    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:17.3-alpine3.20")
-            .withDatabaseName("person")
-            .withUsername("yu71")
-            .withPassword("53cret");
-
     @BeforeEach
     public void setUp() {
         RestAssured.baseURI = "http://localhost:8081";
